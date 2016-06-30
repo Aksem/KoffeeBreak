@@ -1,7 +1,7 @@
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import (QApplication, QDialog, QSystemTrayIcon,
                              QMessageBox, QAction, QMenu)
-from PyQt5.QtCore import QObject, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSignal, Qt
 
 from ui import settings, timer_thread, break_screen
 
@@ -29,8 +29,8 @@ class Window(QDialog):
     def changeIcon(self):
         print(1)
     def createActions(self):
-        self.openAction = QAction("Open", self,
-                                  triggered=self.showNormal)
+        self.openAction = QAction(QIcon("img/icons/break-1-4.svg"),"Open",
+                                  self, triggered=self.showNormal)
         self.takeBreakAction = QAction("Take a break", self,
                                   triggered=self.start_break)
         self.pauseAction = QAction("Pause program", self)
@@ -53,7 +53,7 @@ class Window(QDialog):
         self.trayIcon.setContextMenu(self.trayIconMenu)
 
     def setIcon(self, iconName):
-        icon = QIcon('img/icons/' + iconName + '.png')
+        icon = QIcon('img/icons/' + iconName + '.svg')
         self.trayIcon.setIcon(icon)
 
     def start_break(self):
