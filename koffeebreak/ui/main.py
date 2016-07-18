@@ -1,4 +1,4 @@
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QApplication, QDialog, QSystemTrayIcon,
                              QMessageBox, QAction, QMenu)
 from PyQt5.QtCore import QObject, pyqtSignal, Qt
@@ -29,15 +29,19 @@ class Window(QDialog):
     def changeIcon(self):
         print(1)
     def createActions(self):
-        self.openAction = QAction(QIcon("img/icons/break-1-4.svg"),"Open",
-                                  self, triggered=self.showNormal)
-        self.takeBreakAction = QAction("Take a break", self,
+        self.openAction = QAction(QIcon().fromTheme('document-open'),
+                                  "Open", self,
+                                  triggered=self.showNormal)
+        self.takeBreakAction = QAction(QIcon("img/icons/break-full.svg"),
+                                  "Take a break", self,
                                   triggered=self.start_break)
-        self.pauseAction = QAction("Pause program", self)
-        self.settingsAction = QAction("Settings", self,
+        self.pauseAction = QAction(QIcon().fromTheme('media-playback-pause'),
+                                  "Pause program",self)
+        self.settingsAction = QAction(QIcon().fromTheme('configure'),
+                                  "Settings", self,
                                   triggered=self.settings_dialog.show)
-        self.quitAction = QAction("Quit", self,
-                                  triggered=self.close_app)
+        self.quitAction = QAction(QIcon().fromTheme('application-exit'),
+                                  "Quit", self, triggered=self.close_app)
 
     def createTrayIcon(self):
         self.trayIconMenu = QMenu(self)
