@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'break_screen.ui'
+# Form implementation generated from reading ui file 'src/ui/forms/break_screen.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -56,7 +56,7 @@ class Ui_mainWidget(object):
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
         self.widget.setAutoFillBackground(False)
-        self.widget.setStyleSheet("image: url(:/icons/break-full.svg);")
+        self.widget.setStyleSheet("image: url(:/icons/icons/break-full.svg);")
         self.widget.setObjectName("widget")
         self.verticalLayout_2.addWidget(self.widget)
         self.label = QtWidgets.QLabel(self.mainFrame)
@@ -126,4 +126,3 @@ class Ui_mainWidget(object):
         self.pushButton_2.setText(_translate("mainWidget", "Postpone break"))
         self.pushButton_4.setText(_translate("mainWidget", "Skip the break"))
 
-from ui.forms import break_form_resources_rc
