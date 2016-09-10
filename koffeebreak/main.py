@@ -1,5 +1,6 @@
 import asyncio
 from timer import timer
+import settings
 
 def start_qt_app():
     import sys
@@ -18,8 +19,14 @@ def start_qt_app():
 
     QApplication.setQuitOnLastWindowClosed(False)
     
+    state = 'work-full'
+    
     window = Window()
+    
+    configDict = settings.read()
+    
     with loop:
-        loop.run_until_complete(timer(loop, 300))
+        loop.run_until_complete(timer(loop, int(configDict['TIME']['short_work']), configDict, state))
 
-start_qt_app()
+if __name__ == "__main__":
+    start_qt_app()

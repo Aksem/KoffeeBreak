@@ -17,7 +17,7 @@ class Window(QDialog):
         
         self.createActions()
         self.createTrayIcon()
-        self.setIcon('break-1-4')
+        self.setTrayIcon('work-full')
         self.trayIcon.show()
         self.setWindowTitle("KoffeeBreak")
 
@@ -27,7 +27,7 @@ class Window(QDialog):
         self.openAction = QAction(QIcon().fromTheme('document-open'),
                                   "Open", self,
                                   triggered=self.showNormal)
-        self.takeBreakAction = QAction(QIcon("img/icons/break-full.svg"),
+        self.takeBreakAction = QAction(QIcon("koffebreak-break-full"),
                                   "Take a break", self,
                                   triggered=self.start_break)
         self.pauseAction = QAction(QIcon().fromTheme('media-playback-pause'),
@@ -51,10 +51,13 @@ class Window(QDialog):
         self.trayIcon = QSystemTrayIcon(self)
         self.trayIcon.setContextMenu(self.trayIconMenu)
 
-    def setIcon(self, iconName):
-        icon = QIcon('img/icons/' + iconName + '.svg')
+    def setTrayIcon(self, iconName):
+        icon = QIcon().fromTheme('koffebreak-' + iconName)
         self.trayIcon.setIcon(icon)
-
+    
+    def changeState(self, state):
+        self.setTrayIcon(state)
+        
     def start_break(self):
         self.break_screen = break_screen.BreakWindow()
 

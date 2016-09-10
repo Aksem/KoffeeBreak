@@ -4,6 +4,8 @@ def read():
     #add checking for existing file and if it is true.
     settings = ConfigParser()
     settings.read('settings.ini')
+    for time_item in settings['TIME']:
+        settings['TIME'][time_item] = str(int(settings['TIME'][time_item]) * 60)
     return settings
 
 def set_default(settings=None):

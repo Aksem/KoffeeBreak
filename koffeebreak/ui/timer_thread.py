@@ -18,4 +18,4 @@ class qWorkThread(QThread):
     
     def _delete_(self):
         self.timerThread.stopEvent = True
-        print('cloesd')
+        print('closed')
