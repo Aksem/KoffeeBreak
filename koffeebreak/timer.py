@@ -76,3 +76,4 @@ async def timer(loop, config, gui_connection=None):
         
         if current_state != gui_state:
             gui_connection.changeState.emit(current_state)
+            gui_state = current_state
