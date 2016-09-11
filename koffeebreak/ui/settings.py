@@ -20,7 +20,7 @@ class SettingsDialog(QDialog):
         self.ui.shortBreakSpinBox.setValue(
             int(self.settings['TIME']['short_break']))
         self.ui.shortWorkSpinBox.setValue(
-            int(self.settings['TIME']['short_work']))
+            int(self.settings['TIME']['work_time']))
         self.ui.longBreakSpinBox.setValue(
             int(self.settings['TIME']['long_break']))
         self.ui.shortsBreaksSpinBox.setValue(
