@@ -1,12 +1,15 @@
 import asyncio
+import argparse
+
 from timer import timer
 import settings
 
-def start_qt_app():
+def start_qt_app(config):
     import sys
     from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMessageBox
     from quamash import QEventLoop
     from ui.main import Window
+    from ui.qt_gui_connection import qSignal
     app = QApplication(sys.argv)
     
     loop = QEventLoop(app)
@@ -19,14 +22,22 @@ def start_qt_app():
 
     QApplication.setQuitOnLastWindowClosed(False)
     
-    state = 'work-full'
-    
-    window = Window()
-    
-    configDict = settings.read()
+    gui_connection = qSignal()
+    window = Window(gui_connection)
     
     with loop:
-        loop.run_until_complete(timer(loop, int(configDict['TIME']['short_work']), configDict, state))
+        loop.run_until_complete(timer(loop, config, gui_connection))
 
 if __name__ == "__main__":
-    start_qt_app()
+    parser = argparse.ArgumentParser(description="Koffeebreak")
+    
+    parser.add_argument('--gui', help='set type of gui(none, qt(default))')
+    args = parser.parse_args()
+    
+    config = settings.read()
+    if args.gui == "none":
+        config['EXECUTION']['gui'] = "none"
+    elif args.gui == "qt":
+        config['EXECUTION']['gui'] = "qt"
+    
+    start_qt_app(config)

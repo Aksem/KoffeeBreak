@@ -5,12 +5,12 @@ from PyQt5.QtCore import QObject, pyqtSignal, Qt
 
 from ui import settings, break_screen
 
-class Communicate(QObject):
-    changeIcon = pyqtSignal()
-
 class Window(QDialog):
-    def __init__(self):
+    def __init__(self, gui_connection):
         super(Window, self).__init__()
+        self.gui_connection = gui_connection
+        self.gui_connection.changeState.connect(self.changeState)
+        self.gui_connection.timeIs.connect(self.setTime)
         
         #init settings dialog
         self.settings_dialog = settings.SettingsDialog()
@@ -25,7 +25,7 @@ class Window(QDialog):
         self.openAction = QAction(QIcon().fromTheme('document-open'),
                                   "Open", self,
                                   triggered=self.showNormal)
-        self.takeBreakAction = QAction(QIcon().fromTheme("koffebreak-break-full"),
+        self.takeBreakAction = QAction(QIcon().fromTheme("koffeebreak-break-full"),
                                   "Take a break", self,
                                   triggered=self.start_break)
         self.pauseAction = QAction(QIcon().fromTheme('media-playback-pause'),
@@ -50,7 +50,7 @@ class Window(QDialog):
         self.trayIcon.setContextMenu(self.trayIconMenu)
 
     def setTrayIcon(self, iconName):
-        icon = QIcon().fromTheme('koffebreak-' + iconName)
+        icon = QIcon().fromTheme('koffeebreak-' + iconName)
         self.trayIcon.setIcon(icon)
         
     def start_break(self):
@@ -59,7 +59,35 @@ class Window(QDialog):
     def changeState(self, state):
         self.setTrayIcon(state)
         if state == "break-1-4":
-            self.trayIcon.showMessage("Break-1-4", "content")
-
+            pass
+            #self.gui_connection.whatTime.emit()
+            #self.trayIcon.showMessage("Break-1-4", str(self.time))
+        elif state == "break-2-4":
+            pass
+        elif state == "break-3-4":
+            pass
+        elif state == "break-full":
+            pass
+        elif state == "work-1-8":
+            pass
+        elif state == "work-2-8":
+            pass
+        elif state == "work-3-8":
+            pass
+        elif state == "work-4-8":
+            pass
+        elif state == "work-5-8":
+            pass
+        elif state == "work-6-8":
+            pass
+        elif state == "work-7-8":
+            pass
+        elif state == "work-full":
+            pass
+    
+    def setTime(self, time):
+        self.time = time
+        
     def close_app(self):
-        QApplication.instance().quit()
+        self.gui_connection.closeApp.emit()
+        #QApplication.instance().quit()
