@@ -59,6 +59,7 @@ class Window(QDialog):
     def changeState(self, state):
         self.setTrayIcon(state)
         if state == "break-1-4":
+            pass
             #self.gui_connection.whatTime.emit()
             #self.trayIcon.showMessage("Break-1-4", str(self.time))
         elif state == "break-2-4":
