@@ -7,10 +7,14 @@ async def timer(loop, config, gui_connection=None):
     WORK_TIME = settings.read_parameter(config, ['TIME', 'work_time'], 'int')
     SHORT_BREAK_TIME = settings.read_parameter(config, ['TIME', 'short_break'], 'int')
     LONG_BREAK_TIME = settings.read_parameter(config, ['TIME', 'long_break'], 'int')
-    SHORTS_BEFORE_LONG = settings.read_parameter(config, ['TIME', 'shorts_before_long'], 'int')
+    NUMBER_OF_SHORT_BREAKS = settings.read_parameter(config, ['BREAKS', 'number_of_short_breaks'], 'int')
     default_state = settings.read_parameter(config, ['EXECUTION', 'state'])
+<<<<<<< HEAD
     stop_timer = False
     
+=======
+
+>>>>>>> 7b0d2437534e144f90ec3be78d2579501808c677
     if GUI == 'qt': # init qt gui connection
         def timeRemain():
             gui_connection.timeIs.emit(left_time)
@@ -18,7 +22,7 @@ async def timer(loop, config, gui_connection=None):
             stop_timer = True
         gui_connection.whatTime.connect(timeRemain)
         gui_connection.closeApp.connect(closeApp)
-    
+
     current_state = default_state
     gui_state = current_state
     count_short_breaks = 0
@@ -30,7 +34,7 @@ async def timer(loop, config, gui_connection=None):
         #print(time_remain)
         left_time -= 1
         await asyncio.sleep(1)
-        
+
         percentage = left_time/all_time * 100
         if is_work_time:
             if percentage <= 100 and percentage > 87.5:
@@ -52,7 +56,7 @@ async def timer(loop, config, gui_connection=None):
             else:
                 current_state = 'work-1-8'
                 is_work_time = False
-                if count_short_breaks < SHORTS_BEFORE_LONG:
+                if count_short_breaks < NUMBER_OF_SHORT_BREAKS:
                     left_time = SHORT_BREAK_TIME
                     all_time = SHORT_BREAK_TIME
                     count_short_breaks += 1
@@ -74,7 +78,7 @@ async def timer(loop, config, gui_connection=None):
                 is_work_time = True
                 left_time = WORK_TIME
                 all_time = WORK_TIME
-        
+
         if current_state != gui_state:
             gui_connection.changeState.emit(current_state)
             gui_state = current_state
