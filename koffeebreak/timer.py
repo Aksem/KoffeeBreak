@@ -9,12 +9,17 @@ async def timer(loop, config, gui_connection=None):
     LONG_BREAK_TIME = settings.read_parameter(config, ['TIME', 'long_break'], 'int')
     NUMBER_OF_SHORT_BREAKS = settings.read_parameter(config, ['BREAKS', 'number_of_short_breaks'], 'int')
     default_state = settings.read_parameter(config, ['EXECUTION', 'state'])
+<<<<<<< HEAD
+    stop_timer = False
+    
+=======
 
+>>>>>>> 7b0d2437534e144f90ec3be78d2579501808c677
     if GUI == 'qt': # init qt gui connection
         def timeRemain():
             gui_connection.timeIs.emit(left_time)
         def closeApp():
-            print("Close app signal")
+            stop_timer = True
         gui_connection.whatTime.connect(timeRemain)
         gui_connection.closeApp.connect(closeApp)
 
@@ -76,3 +81,7 @@ async def timer(loop, config, gui_connection=None):
 
         if current_state != gui_state:
             gui_connection.changeState.emit(current_state)
+            gui_state = current_state
+        
+        if stop_timer == True:
+            break

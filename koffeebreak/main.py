@@ -25,9 +25,21 @@ def start_qt_app(config):
     gui_connection = qSignal()
     window = Window(gui_connection)
     
+    def closeApp():
+        print("Close app signal")
+        for task in asyncio.Task.all_tasks():
+            print(task)
+            task.cancel()
+        loop.stop()
+    gui_connection.closeApp.connect(closeApp)
+    
     with loop:
-        loop.run_until_complete(timer(loop, config, gui_connection))
-
+        #asyncio.run_coroutine_threadsafe(timer(loop, config, gui_connection), loop)
+        try:
+            loop.run_until_complete(timer(loop, config, gui_connection))
+        except asyncio.CancelledError:
+            pass
+        
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Koffeebreak")
     
@@ -40,4 +52,5 @@ if __name__ == "__main__":
     elif args.gui == "qt":
         config['EXECUTION']['gui'] = "qt"
     
-    start_qt_app(config)
+    if settings.read_parameter(config, ['EXECUTION', 'gui']) == 'qt':
+        start_qt_app(config)

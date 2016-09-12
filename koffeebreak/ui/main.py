@@ -67,7 +67,7 @@ class Window(QDialog):
         elif state == "break-3-4":
             pass
         elif state == "break-full":
-            pass
+            self.start_break()
         elif state == "work-1-8":
             pass
         elif state == "work-2-8":
