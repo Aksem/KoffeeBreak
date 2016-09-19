@@ -29,7 +29,8 @@ class Window(QDialog):
                                   "Take a break", self,
                                   triggered=self.start_break)
         self.pauseAction = QAction(QIcon().fromTheme('media-playback-pause'),
-                                  "Pause program",self)
+                                  "Pause program",self,
+                                  triggered=self.pauseProgram)
         self.settingsAction = QAction(QIcon().fromTheme('configure'),
                                   "Settings", self,
                                   triggered=self.settings_dialog.show)
@@ -87,6 +88,9 @@ class Window(QDialog):
     
     def setTime(self, time):
         self.time = time
+    
+    def pauseProgram(self):
+        self.gui_connection.pauseTimer.emit()
         
     def close_app(self):
         self.gui_connection.closeApp.emit()

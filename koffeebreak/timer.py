@@ -22,6 +22,7 @@ class Timer():
     def init_gui_qt(self):
         self.gui_connection.whatTime.connect(self.timeRemain)
         self.gui_connection.skipBreak.connect(self.skipBreak)
+        self.gui_connection.pauseTimer.connect(self.pause)
     
     def init_parameters(self):
         self.current_state = self.DEFAULT_STATE
@@ -38,8 +39,11 @@ class Timer():
         self.is_work_time = True
         self.left_time = self.WORK_TIME
     
-    def start(self):
+    def start_or_resume(self):
         self.isActive = True
+    
+    def pause(self):
+        self.isActive = False
         
     async def makeStep(self):
         self.left_time -= 1
@@ -95,8 +99,7 @@ class Timer():
 
 async def timer(loop, config, gui_connection=None):
     timer = Timer(config, gui_connection)
-    timer.start()
-    while True:
-        if timer.isActive:
-            await timer.makeStep()
-            print(timer.left_time)
+    timer.start_or_resume()
+    while timer.isActive:
+        await timer.makeStep()
+        print(timer.left_time)
