@@ -1,87 +1,102 @@
 import asyncio
 import settings
 
-async def timer(loop, config, gui_connection=None):
-    #reading configs
-    GUI = settings.read_parameter(config, ['EXECUTION', 'gui'])
-    WORK_TIME = settings.read_parameter(config, ['TIME', 'work_time'], 'int')
-    SHORT_BREAK_TIME = settings.read_parameter(config, ['TIME', 'short_break'], 'int')
-    LONG_BREAK_TIME = settings.read_parameter(config, ['TIME', 'long_break'], 'int')
-    NUMBER_OF_SHORT_BREAKS = settings.read_parameter(config, ['BREAKS', 'number_of_short_breaks'], 'int')
-    default_state = settings.read_parameter(config, ['EXECUTION', 'state'])
-<<<<<<< HEAD
-    stop_timer = False
+class Timer():
+    def __init__(self, config, gui_connection=None):
+        self.config = config
+        self.gui_connection = gui_connection
+        
+        self.init_config()
+        if self.GUI == "qt":
+            self.init_gui_qt()
+        self.init_parameters()
     
-=======
-
->>>>>>> 7b0d2437534e144f90ec3be78d2579501808c677
-    if GUI == 'qt': # init qt gui connection
-        def timeRemain():
-            gui_connection.timeIs.emit(left_time)
-        def closeApp():
-            stop_timer = True
-        gui_connection.whatTime.connect(timeRemain)
-        gui_connection.closeApp.connect(closeApp)
-
-    current_state = default_state
-    gui_state = current_state
-    count_short_breaks = 0
-    is_work_time = True
-    left_time = WORK_TIME
-    all_time = WORK_TIME
-    # start timer
-    while True:
-        #print(time_remain)
-        left_time -= 1
+    def init_config(self):
+        self.GUI = settings.read_parameter(self.config, ['EXECUTION', 'gui'])
+        self.WORK_TIME = settings.read_parameter(self.config, ['TIME', 'work_time'], 'int')
+        self.SHORT_BREAK_TIME = settings.read_parameter(self.config, ['TIME', 'short_break'], 'int')
+        self.LONG_BREAK_TIME = settings.read_parameter(self.config, ['TIME', 'long_break'], 'int')
+        self.NUMBER_OF_SHORT_BREAKS = settings.read_parameter(self.config, ['BREAKS', 'number_of_short_breaks'], 'int')
+        self.DEFAULT_STATE = settings.read_parameter(self.config, ['EXECUTION', 'state'])
+    
+    def init_gui_qt(self):
+        self.gui_connection.whatTime.connect(self.timeRemain)
+        self.gui_connection.skipBreak.connect(self.skipBreak)
+    
+    def init_parameters(self):
+        self.current_state = self.DEFAULT_STATE
+        self.gui_state = self.current_state
+        self.left_time = self.WORK_TIME
+        self.all_time = self.WORK_TIME
+        self.count_short_breaks = 0
+        self.is_work_time = True
+    
+    def timeRemain(self):
+            self.gui_connection.timeIs.emit(left_time)
+    
+    def skipBreak(self):
+        self.is_work_time = True
+        self.left_time = self.WORK_TIME
+    
+    def start(self):
+        self.isActive = True
+        
+    async def makeStep(self):
+        self.left_time -= 1
         await asyncio.sleep(1)
 
-        percentage = left_time/all_time * 100
-        if is_work_time:
+        percentage = self.left_time/self.all_time * 100
+        if self.is_work_time:
             if percentage <= 100 and percentage > 87.5:
-                current_state = 'work-full'
+                self.current_state = 'work-full'
             elif percentage <= 87.5 and percentage > 75:
-                current_state = 'work-7-8'
+                self.current_state = 'work-7-8'
             elif percentage <= 75 and percentage > 62.5:
-                current_state = 'work-6-8'
+                self.current_state = 'work-6-8'
             elif percentage <= 62.5 and percentage > 50:
-                current_state = 'work-5-8'
+                self.current_state = 'work-5-8'
             elif percentage <= 50 and percentage > 37.5:
-                current_state = 'work-4-8'
+                self.current_state = 'work-4-8'
             elif percentage <= 37.5 and percentage > 25:
-                current_state = 'work-3-8'
+                self.current_state = 'work-3-8'
             elif percentage <= 25 and percentage > 12.5:
-                current_state = 'work-2-8'
+                self.current_state = 'work-2-8'
             elif percentage <=12.5 and percentage > 0:
-                current_state = 'work-1-8'
+                self.current_state = 'work-1-8'
             else:
-                current_state = 'work-1-8'
-                is_work_time = False
-                if count_short_breaks < NUMBER_OF_SHORT_BREAKS:
-                    left_time = SHORT_BREAK_TIME
-                    all_time = SHORT_BREAK_TIME
-                    count_short_breaks += 1
+                self.current_state = 'work-1-8'
+                self.is_work_time = False
+                if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
+                    self.left_time = self.SHORT_BREAK_TIME
+                    self.all_time = self.SHORT_BREAK_TIME
+                    self.count_short_breaks += 1
                 else:
-                    left_time = LONG_BREAK_TIME
-                    all_time = LONG_BREAK_TIME
-                    count_short_breaks = 0
+                    self.left_time = self.LONG_BREAK_TIME
+                    self.all_time = self.LONG_BREAK_TIME
+                    self.count_short_breaks = 0
         else:
             if percentage <= 100 and percentage > 75:
-                current_state = 'break-full'
+                self.current_state = 'break-full'
             elif percentage <= 75 and percentage > 50:
-                current_state = 'break-3-4'
+                self.current_state = 'break-3-4'
             elif percentage <= 50 and percentage > 25:
-                current_state = 'break-2-4'
+                self.current_state = 'break-2-4'
             elif percentage <= 25 and percentage > 0:
-                current_state = 'break-1-4'
+                self.current_state = 'break-1-4'
             else:
-                current_state = 'break-1-4'
-                is_work_time = True
-                left_time = WORK_TIME
-                all_time = WORK_TIME
+                self.current_state = 'break-1-4'
+                self.is_work_time = True
+                self.left_time = WORK_TIME
+                self.all_time = WORK_TIME
 
-        if current_state != gui_state:
-            gui_connection.changeState.emit(current_state)
-            gui_state = current_state
-        
-        if stop_timer == True:
-            break
+        if self.current_state != self.gui_state:
+            self.gui_connection.changeState.emit(self.current_state)
+            self.gui_state = self.current_state
+
+async def timer(loop, config, gui_connection=None):
+    timer = Timer(config, gui_connection)
+    timer.start()
+    while True:
+        if timer.isActive:
+            await timer.makeStep()
+            print(timer.left_time)

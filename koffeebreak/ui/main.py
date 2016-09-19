@@ -54,7 +54,7 @@ class Window(QDialog):
         self.trayIcon.setIcon(icon)
         
     def start_break(self):
-        self.break_screen = break_screen.BreakWindow()
+        self.break_screen = break_screen.BreakWindow(self.gui_connection)
     
     def changeState(self, state):
         self.setTrayIcon(state)
@@ -83,7 +83,7 @@ class Window(QDialog):
         elif state == "work-7-8":
             pass
         elif state == "work-full":
-            pass
+            self.break_screen.close() #add try if windows is closed
     
     def setTime(self, time):
         self.time = time
