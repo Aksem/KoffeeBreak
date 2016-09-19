@@ -6,3 +6,4 @@ class qSignal(QObject):
     timeIs = pyqtSignal(object)
     closeApp = pyqtSignal()
     skipBreak = pyqtSignal()
+    pauseTimer = pyqtSignal()
