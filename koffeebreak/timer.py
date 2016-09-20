@@ -20,7 +20,7 @@ class Timer():
         self.DEFAULT_STATE = settings.read_parameter(self.config, ['EXECUTION', 'state'])
 
     def init_gui_qt(self):
-        self.gui_connection.skipBreak.connect(self.skipBreak)
+        self.gui_connection.skipBreak.connect(self.f_start_work)
         self.gui_connection.pauseTimer.connect(self.pause)
         self.gui_connection.postponeBreak.connect(self.postponeBreak)
         self.gui_connection.startBreak.connect(self.f_start_break)
@@ -38,7 +38,7 @@ class Timer():
         self.left_time = 300
         self.all_time = 300
 
-    def skipBreak(self):
+    def f_start_work(self):
         self.is_work_time = True
         self.left_time = self.WORK_TIME
         self.all_time = self.WORK_TIME
@@ -62,8 +62,8 @@ class Timer():
             self.count_short_breaks = 0
 
     async def makeStep(self):
-
-        self.gui_connection.whatTime.emit(self.left_time)
+        if self.GUI == "qt":
+            self.gui_connection.whatTime.emit(self.left_time)
 
         percent = self.left_time/self.all_time * 100
         if self.is_work_time:

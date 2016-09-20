@@ -1,6 +1,6 @@
 from subprocess import Popen, PIPE
 
-from PyQt5.QtWidgets import QDialog, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from ui.forms import break_screen_form
