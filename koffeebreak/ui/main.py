@@ -10,17 +10,17 @@ class Window(QDialog):
         super(Window, self).__init__()
         self.gui_connection = gui_connection
         self.gui_connection.changeState.connect(self.changeState)
-        self.gui_connection.whatTime.connect(self.setTime)
-
+        self.gui_connection.timeIs.connect(self.setTime)
+        
         #init settings dialog
         self.settings_dialog = settings.SettingsDialog()
-
+        
         self.createActions()
         self.createTrayIcon()
         self.setTrayIcon('work-full')
         self.trayIcon.show()
         self.setWindowTitle("KoffeeBreak")
-
+        
     def createActions(self):
         self.openAction = QAction(QIcon().fromTheme('document-open'),
                                   "Open", self,
@@ -53,11 +53,10 @@ class Window(QDialog):
     def setTrayIcon(self, iconName):
         icon = QIcon().fromTheme('koffeebreak-' + iconName)
         self.trayIcon.setIcon(icon)
-
+        
     def start_break(self):
-        self.gui_connection.startBreak.emit()
         self.break_screen = break_screen.BreakWindow(self.gui_connection)
-
+    
     def changeState(self, state):
         self.setTrayIcon(state)
         if state == "break-1-4":
@@ -86,13 +85,13 @@ class Window(QDialog):
             pass
         elif state == "work-full":
             self.break_screen.close() #add try if windows is closed
-
+    
     def setTime(self, time):
         self.time = time
-
+    
     def pauseProgram(self):
         self.gui_connection.pauseTimer.emit()
-
+        
     def close_app(self):
         self.gui_connection.closeApp.emit()
         #QApplication.instance().quit()

@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtGui import QIcon
 from ui.forms import settings_form
 import settings as settings_file
+from threading import Timer
 
 class SettingsDialog(QDialog):
     def __init__(self):
@@ -13,7 +14,7 @@ class SettingsDialog(QDialog):
         self.setWindowTitle("KoffeeBreak - Settings")
         self.setWindowIcon(QIcon().fromTheme("koffeebreak"))
 
-        #conections
+        ##conections
         self.ui.closePushButton.clicked.connect(self.close)
         self.ui.savePushButton.clicked.connect(self.save_settings)
         self.ui.DefaultPushButton.clicked.connect(self.return_to_default)
@@ -44,17 +45,16 @@ class SettingsDialog(QDialog):
         self.settings['BREAKS']['number_of_short_breaks'] = str(
             self.ui.numberOfShortsBreaksSpinBox.value())
         settings_file.write(self.settings)
-        self.ui.statusLabel.setText('To apply changes, please, restart application.')
+        self.ui.statusLabel.setText('Saved successfully.')
+        Timer(1, self.ui.statusLabel.clear).start()
         self.is_saved = True
 
     def return_to_default(self):
         settings_file.set_default(self.settings)
         self.load_settings()
-        self.ui.statusLabel.clear()
 
     def value_changed(self):
         self.is_saved = False
-        self.ui.statusLabel.clear()
 
     def closeEvent(self, event):
         if self.is_saved:
@@ -79,5 +79,3 @@ class SettingsDialog(QDialog):
                 event.accept()
             elif answer == QMessageBox.Cancel:
                 event.ignore()
-
-        self.ui.statusLabel.clear()
