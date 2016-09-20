@@ -20,10 +20,10 @@ class Timer():
         self.DEFAULT_STATE = settings.read_parameter(self.config, ['EXECUTION', 'state'])
 
     def init_gui_qt(self):
-        self.gui_connection.skipBreak.connect(self.f_start_work)
+        self.gui_connection.skipBreak.connect(self.start_work)
         self.gui_connection.pauseTimer.connect(self.pause)
         self.gui_connection.postponeBreak.connect(self.postponeBreak)
-        self.gui_connection.startBreak.connect(self.f_start_break)
+        self.gui_connection.startBreak.connect(self.start_break)
 
     def init_parameters(self):
         self.current_state = self.DEFAULT_STATE
@@ -38,7 +38,7 @@ class Timer():
         self.left_time = 310
         self.all_time = 310
 
-    def f_start_work(self):
+    def start_work(self):
         self.is_work_time = True
         self.left_time = self.WORK_TIME
         self.all_time = self.WORK_TIME
@@ -49,8 +49,8 @@ class Timer():
     def pause(self):
         self.isActive = False
 
-    def f_start_break(self):
-        # force start break
+    def start_break(self):
+        # start break
         if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
             self.left_time = self.SHORT_BREAK_TIME
             self.all_time = self.SHORT_BREAK_TIME
@@ -85,15 +85,7 @@ class Timer():
                 self.current_state = 'work-1-8'
             else:
                 self.current_state = 'work-1-8'
-                self.is_work_time = False
-                if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
-                    self.left_time = self.SHORT_BREAK_TIME
-                    self.all_time = self.SHORT_BREAK_TIME
-                    self.count_short_breaks += 1
-                else:
-                    self.left_time = self.LONG_BREAK_TIME
-                    self.all_time = self.LONG_BREAK_TIME
-                    self.count_short_breaks = 0
+                self.start_break()
         else:
             if percent <= 100 and percent > 75:
                 self.current_state = 'break-full'
@@ -105,12 +97,11 @@ class Timer():
                 self.current_state = 'break-1-4'
             else:
                 self.current_state = 'break-1-4'
-                self.is_work_time = True
-                self.left_time = WORK_TIME
-                self.all_time = WORK_TIME
+                self.start_work()
 
         if self.current_state != self.gui_state:
-            self.gui_connection.changeState.emit(self.current_state)
+            if self.GUI == "qt":
+                self.gui_connection.changeState.emit(self.current_state)
             self.gui_state = self.current_state
 
         self.left_time -= 1
