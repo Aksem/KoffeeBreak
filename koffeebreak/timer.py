@@ -35,8 +35,8 @@ class Timer():
 
     def postponeBreak(self):
         self.is_work_time = True
-        self.left_time = 300
-        self.all_time = 300
+        self.left_time = 310
+        self.all_time = 310
 
     def f_start_work(self):
         self.is_work_time = True
@@ -51,7 +51,6 @@ class Timer():
 
     def f_start_break(self):
         # force start break
-        self.is_work_time = False
         if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
             self.left_time = self.SHORT_BREAK_TIME
             self.all_time = self.SHORT_BREAK_TIME
@@ -60,6 +59,7 @@ class Timer():
             self.left_time = self.LONG_BREAK_TIME
             self.all_time = self.LONG_BREAK_TIME
             self.count_short_breaks = 0
+        self.is_work_time = False
 
     async def makeStep(self):
         if self.GUI == "qt":

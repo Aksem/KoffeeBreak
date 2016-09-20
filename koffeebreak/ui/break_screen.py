@@ -18,6 +18,7 @@ class BreakWindow(QWidget):
         self.gui_connection = gui_connection
         #self.gui_connection.changeState.connect(self.changeState)
         self.gui_connection.whatTime.connect(self.setTime)
+        self.gui_connection.startBreak.emit()
 
         self.ui.lockScreen_pushButton.clicked.connect(self.lockScreen)
         self.ui.breakComp_pushButton.clicked.connect(self.close)
