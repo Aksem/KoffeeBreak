@@ -20,7 +20,7 @@ class Timer():
         self.DEFAULT_STATE = settings.read_parameter(self.config, ['EXECUTION', 'state'])
 
     def init_gui_qt(self):
-        self.gui_connection.skipBreak.connect(self.start_work)
+        self.gui_connection.skipBreak.connect(self.skipBreak)
         self.gui_connection.pauseTimer.connect(self.pause)
         self.gui_connection.postponeBreak.connect(self.postponeBreak)
         self.gui_connection.startBreak.connect(self.start_break)
@@ -34,9 +34,14 @@ class Timer():
         self.is_work_time = True
 
     def postponeBreak(self):
+        self.count_short_breaks -= 1
         self.is_work_time = True
-        self.left_time = 310
-        self.all_time = 310
+        self.left_time = 300
+        self.all_time = 300
+
+    def skipBreak(self):
+        self.count_short_breaks -= 1
+        self.start_work()
 
     def start_work(self):
         self.is_work_time = True
