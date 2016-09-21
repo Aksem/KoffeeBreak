@@ -14,8 +14,9 @@ class Timer():
     def init_config(self):
         self.GUI = settings.read_parameter(self.config, ['EXECUTION', 'gui'])
         self.WORK_TIME = settings.read_parameter(self.config, ['TIME', 'work_time'], 'int')
-        self.SHORT_BREAK_TIME = settings.read_parameter(self.config, ['TIME', 'short_break'], 'int')
-        self.LONG_BREAK_TIME = settings.read_parameter(self.config, ['TIME', 'long_break'], 'int')
+        self.TIME_OF_SHORT_BREAK = settings.read_parameter(self.config, ['TIME', 'time_of_short_break'], 'int')
+        self.TIME_OF_LONG_BREAK = settings.read_parameter(self.config, ['TIME', 'time_of_long_break'], 'int')
+        self.WORK_TIME_WHEN_POSTPONE_BREAK = settings.read_parameter(self.config, ['TIME', 'work_time_when_postpone_break'], 'int')
         self.NUMBER_OF_SHORT_BREAKS = settings.read_parameter(self.config, ['BREAKS', 'number_of_short_breaks'], 'int')
         self.DEFAULT_STATE = settings.read_parameter(self.config, ['EXECUTION', 'state'])
 
@@ -34,13 +35,19 @@ class Timer():
         self.is_work_time = True
 
     def postponeBreak(self):
-        self.count_short_breaks -= 1
+        if (not self.count_short_breaks == 0):
+            self.count_short_breaks -=1
+        else:
+            self.count_short_breaks = 3
+        self.left_time = self.WORK_TIME_WHEN_POSTPONE_BREAK
+        self.all_time = self.WORK_TIME_WHEN_POSTPONE_BREAK
         self.is_work_time = True
-        self.left_time = 300
-        self.all_time = 300
 
     def skipBreak(self):
-        self.count_short_breaks -= 1
+        if (not self.count_short_breaks == 0):
+            self.count_short_breaks -=1
+        else:
+            self.count_short_breaks = 3
         self.start_work()
 
     def start_work(self):
@@ -57,12 +64,12 @@ class Timer():
     def start_break(self):
         # start break
         if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
-            self.left_time = self.SHORT_BREAK_TIME
-            self.all_time = self.SHORT_BREAK_TIME
+            self.left_time = self.TIME_OF_SHORT_BREAK
+            self.all_time = self.TIME_OF_SHORT_BREAK
             self.count_short_breaks += 1
         else:
-            self.left_time = self.LONG_BREAK_TIME
-            self.all_time = self.LONG_BREAK_TIME
+            self.left_time = self.TIME_OF_LONG_BREAK
+            self.all_time = self.TIME_OF_LONG_BREAK
             self.count_short_breaks = 0
         self.is_work_time = False
 
