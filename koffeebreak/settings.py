@@ -22,8 +22,9 @@ def read_parameter(config, parameter, p_type="str"):
 def set_default(settings=None):
     #try to remove?
     settings['TIME'] = {'work_time': 25,
-                        'short_break': 5,
-                        'long_break': 10}
+                        'time_short_break': 5,
+                        'time_long_break': 10,
+                        'work_time_when_postpone_break': 5 }
     settings['BREAKS'] = {'number_of_short_breaks': 3}
     settings['EXECUTION'] = {'gui': 'qt',
                              'state': 'work-full'}
