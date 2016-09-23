@@ -1,5 +1,4 @@
-import asyncio
-import settings
+import asyncio, settings, history
 
 class Timer():
     def __init__(self, config, gui_connection=None):
@@ -10,6 +9,11 @@ class Timer():
         if self.GUI == "qt":
             self.init_gui_qt()
         self.init_parameters()
+
+        self.history_file = history.History()
+        self.history_file.write('Open program')
+
+        self.start_work()
 
     def init_config(self):
         self.GUI = settings.read_parameter(self.config, ['EXECUTION', 'gui'])
@@ -35,6 +39,7 @@ class Timer():
         self.is_work_time = True
 
     def postponeBreak(self):
+        self.history_file.write('Postpone break')
         if (not self.count_short_breaks == 0):
             self.count_short_breaks -=1
         else:
@@ -44,6 +49,7 @@ class Timer():
         self.is_work_time = True
 
     def skipBreak(self):
+        self.history_file.write('Skip break')
         if (not self.count_short_breaks == 0):
             self.count_short_breaks -=1
         else:
@@ -51,6 +57,7 @@ class Timer():
         self.start_work()
 
     def start_work(self):
+        self.history_file.write('Start work')
         self.is_work_time = True
         self.left_time = self.WORK_TIME
         self.all_time = self.WORK_TIME
@@ -59,15 +66,18 @@ class Timer():
         self.isActive = True
 
     def pause(self):
+        self.history_file.write('Pause program')
         self.isActive = False
 
     def start_break(self):
         # start break
         if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
+            self.history_file.write('Start short break')
             self.left_time = self.TIME_OF_SHORT_BREAK
             self.all_time = self.TIME_OF_SHORT_BREAK
             self.count_short_breaks += 1
         else:
+            self.history_file.write('Start long break')
             self.left_time = self.TIME_OF_LONG_BREAK
             self.all_time = self.TIME_OF_LONG_BREAK
             self.count_short_breaks = 0
