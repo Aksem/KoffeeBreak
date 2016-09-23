@@ -10,14 +10,17 @@ class BreakWindow(QWidget):
         super(BreakWindow, self).__init__()
         self.ui = break_screen_form.Ui_mainWidget()
         self.ui.setupUi(self)
+
         #self.setWindowFlags(Qt.FramelessWindowHint)
         #self.setParent(None)
         self.setAttribute(Qt.WA_NoSystemBackground)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.showFullScreen()
+
         self.gui_connection = gui_connection
         #self.gui_connection.changeState.connect(self.changeState)
         self.gui_connection.whatTime.connect(self.setTime)
+        self.gui_connection.startBreak.emit()
 
         self.ui.lockScreen_pushButton.clicked.connect(self.lockScreen)
         self.ui.breakComp_pushButton.clicked.connect(self.close)

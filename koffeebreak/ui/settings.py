@@ -16,33 +16,39 @@ class SettingsDialog(QDialog):
         #conections
         self.ui.closePushButton.clicked.connect(self.close)
         self.ui.savePushButton.clicked.connect(self.save_settings)
-        self.ui.DefaultPushButton.clicked.connect(self.return_to_default)
+        self.ui.defaultPushButton.clicked.connect(self.return_to_default)
 
         self.is_saved = True
 
         self.ui.workTimeSpinBox.valueChanged.connect(self.value_changed)
-        self.ui.shortBreakSpinBox.valueChanged.connect(self.value_changed)
-        self.ui.longBreakSpinBox.valueChanged.connect(self.value_changed)
+        self.ui.timeOfShortBreakSpinBox.valueChanged.connect(self.value_changed)
+        self.ui.timeOfLongBreakSpinBox.valueChanged.connect(self.value_changed)
+        self.ui.workTimeWhenPostponeBreakSpinBox.valueChanged.connect(self.value_changed)
         self.ui.numberOfShortsBreaksSpinBox.valueChanged.connect(self.value_changed)
+
 
     def load_settings(self):
         self.settings = settings_file.read()
 
         self.ui.workTimeSpinBox.setValue(
             int(self.settings['TIME']['work_time']) / 60)
-        self.ui.shortBreakSpinBox.setValue(
-            int(self.settings['TIME']['short_break']) / 60)
-        self.ui.longBreakSpinBox.setValue(
-            int(self.settings['TIME']['long_break']) / 60)
+        self.ui.timeOfShortBreakSpinBox.setValue(
+            int(self.settings['TIME']['time_of_short_break']) / 60)
+        self.ui.timeOfLongBreakSpinBox.setValue(
+            int(self.settings['TIME']['time_of_long_break']) / 60)
+        self.ui.workTimeWhenPostponeBreakSpinBox.setValue(
+            int(self.settings['TIME']['work_time_when_postpone_break']) / 60)
         self.ui.numberOfShortsBreaksSpinBox.setValue(
             int(self.settings['BREAKS']['number_of_short_breaks']))
 
     def save_settings(self):
-        self.settings['TIME']['short_break'] = str(self.ui.shortBreakSpinBox.value())
+        self.settings['TIME']['time_of_short_break'] = str(self.ui.timeOfShortBreakSpinBox.value())
+        self.settings['TIME']['time_of_long_break'] = str(self.ui.timeOfLongBreakSpinBox.value())
         self.settings['TIME']['work_time'] = str(self.ui.workTimeSpinBox.value())
-        self.settings['TIME']['long_break'] = str(self.ui.longBreakSpinBox.value())
+        self.settings['TIME']['work_time_when_postpone_break'] = str(
+                        self.ui.numberOfShortsBreaksSpinBox.value())
         self.settings['BREAKS']['number_of_short_breaks'] = str(
-            self.ui.numberOfShortsBreaksSpinBox.value())
+                        self.ui.numberOfShortsBreaksSpinBox.value())
         settings_file.write(self.settings)
         self.ui.statusLabel.setText('To apply changes, please, restart application.')
         self.is_saved = True
