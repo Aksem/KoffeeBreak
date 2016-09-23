@@ -18,9 +18,10 @@ class History():
             self.last_date = None
 
     def write(self, message):
-        if (not self.last_date == datetime.date(datetime.now())):
-            self.last_date = datetime.date(datetime.now())
+        current_time = datetime.now()
+        if (not self.last_date == datetime.date(current_time)):
+            self.last_date = datetime.date(current_time)
             with open(self.HISTORY_FILE, 'a') as f:
                 print('$', self.last_date, file=f)
         with open(self.HISTORY_FILE, 'a') as f:
-            print(datetime.time(datetime.now()), '- ' + message, file=f)
+            print(datetime.time(current_time).strftime("%H:%M:%S"), '- ' + message, file=f)

@@ -1,4 +1,6 @@
-import asyncio, settings, history
+import asyncio
+import settings
+import history
 
 class Timer():
     def __init__(self, config, gui_connection=None):
