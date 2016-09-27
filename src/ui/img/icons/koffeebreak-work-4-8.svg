@@ -11,7 +11,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="work-4-8.svg">
+   sodipodi:docname="koffeebreak-work-4-8.svg">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -20,7 +20,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -34,13 +34,13 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1366"
-     inkscape:window-height="711"
+     inkscape:window-height="713"
      id="namedview8"
      showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="22.627417"
-     inkscape:cx="7.1463703"
+     inkscape:cx="-0.85277516"
      inkscape:cy="9.5036925"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -52,30 +52,6 @@
     <inkscape:grid
        type="xygrid"
        id="grid4138" />
-    <sodipodi:guide
-       position="3,3"
-       orientation="1,0"
-       id="guide4140" />
-    <sodipodi:guide
-       position="11,11"
-       orientation="1,0"
-       id="guide4142"
-       inkscape:label=""
-       inkscape:color="rgb(0,0,255)" />
-    <sodipodi:guide
-       position="19,19"
-       orientation="0,1"
-       id="guide4144" />
-    <sodipodi:guide
-       position="3,3"
-       orientation="0,1"
-       id="guide4146" />
-    <sodipodi:guide
-       position="11,11"
-       orientation="1,0"
-       id="guide4162"
-       inkscape:label=""
-       inkscape:color="rgb(0,0,255)" />
   </sodipodi:namedview>
   <defs
      id="defs3051">

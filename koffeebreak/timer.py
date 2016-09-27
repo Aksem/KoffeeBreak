@@ -17,6 +17,9 @@ class Timer():
 
         self.start_work()
 
+        self.isPause = False
+        self.isActive = False
+
     def init_config(self):
         self.GUI = settings.read_parameter(self.config, ['EXECUTION', 'gui'])
         self.WORK_TIME = settings.read_parameter(self.config, ['TIME', 'work_time'], 'int')
@@ -28,17 +31,15 @@ class Timer():
 
     def init_gui_qt(self):
         self.gui_connection.skipBreak.connect(self.skipBreak)
-        self.gui_connection.pauseTimer.connect(self.pause)
+        self.gui_connection.pauseOrResumeTimer.connect(self.pause_or_resume)
         self.gui_connection.postponeBreak.connect(self.postponeBreak)
         self.gui_connection.startBreak.connect(self.start_break)
+        self.gui_connection.closeApp.connect(self.end)
 
     def init_parameters(self):
         self.current_state = self.DEFAULT_STATE
         self.gui_state = self.current_state
-        self.left_time = self.WORK_TIME
-        self.all_time = self.WORK_TIME
         self.count_short_breaks = 0
-        self.is_work_time = True
 
     def postponeBreak(self):
         self.history_file.write('Postpone break')
@@ -64,12 +65,19 @@ class Timer():
         self.left_time = self.WORK_TIME
         self.all_time = self.WORK_TIME
 
-    def start_or_resume(self):
+    def start(self):
         self.isActive = True
 
-    def pause(self):
-        self.history_file.write('Pause program')
+    def end(self):
         self.isActive = False
+
+    def pause_or_resume(self):
+        if self.isPause == False:
+            self.history_file.write('Pause program')
+            self.isPause = True
+        else:
+            self.history_file.write('Resume program')
+            self.isPause = False
 
     def start_break(self):
         # start break
@@ -90,7 +98,11 @@ class Timer():
             self.gui_connection.whatTime.emit(self.left_time)
 
         percent = self.left_time/self.all_time * 100
-        if self.is_work_time:
+
+        if self.isPause:
+            if (not self.current_state.endswith('-pause')):
+                self.current_state += '-pause'
+        elif self.is_work_time:
             if percent <= 100 and percent > 87.5:
                 self.current_state = 'work-full'
             elif percent <= 87.5 and percent > 75:
@@ -110,6 +122,7 @@ class Timer():
             else:
                 self.current_state = 'work-1-8'
                 self.start_break()
+            self.left_time -= 1
         else:
             if percent <= 100 and percent > 75:
                 self.current_state = 'break-full'
@@ -122,18 +135,18 @@ class Timer():
             else:
                 self.current_state = 'break-1-4'
                 self.start_work()
+            self.left_time -= 1
 
         if self.current_state != self.gui_state:
             if self.GUI == "qt":
                 self.gui_connection.changeState.emit(self.current_state)
             self.gui_state = self.current_state
 
-        self.left_time -= 1
         await asyncio.sleep(1)
 
 async def timer(loop, config, gui_connection=None):
     timer = Timer(config, gui_connection)
-    timer.start_or_resume()
+    timer.start()
     while timer.isActive:
         await timer.makeStep()
         print(timer.left_time)

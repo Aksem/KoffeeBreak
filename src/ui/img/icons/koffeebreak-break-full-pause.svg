@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="koffeebreak-break-full.svg"
+   sodipodi:docname="koffeebreak-break-full-pause.svg"
    inkscape:export-filename="/home/fablissimo/face2.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.9999995"
-     inkscape:cx="-16.942434"
-     inkscape:cy="10.272515"
+     inkscape:zoom="31.999998"
+     inkscape:cx="7.4325676"
+     inkscape:cy="6.7412647"
      inkscape:document-units="px"
      inkscape:current-layer="g4166"
      showgrid="true"
@@ -68,7 +68,7 @@
        id="grid4160"
        originx="-0.26458331"
        originy="-0.26458349"
-       visible="false" />
+       visible="true" />
     <sodipodi:guide
        position="1.7272727e-08,5.8208334"
        orientation="21.999992,0"
@@ -135,5 +135,23 @@
        d="M 7.5 1.96875 C 7.223 1.96875 7 2.19175 7 2.46875 L 7 3.46875 C 7 3.74575 7.223 3.96875 7.5 3.96875 C 7.777 3.96875 8 3.74575 8 3.46875 L 8 2.46875 C 8 2.19175 7.777 1.96875 7.5 1.96875 z M 10.5 1.96875 C 10.223 1.96875 10 2.19175 10 2.46875 L 10 3.46875 C 10 3.74575 10.223 3.96875 10.5 3.96875 C 10.777 3.96875 11 3.74575 11 3.46875 L 11 2.46875 C 11 2.19175 10.777 1.96875 10.5 1.96875 z M 13.5 2 C 13.223 2 13 2.223 13 2.5 L 13 3.46875 C 13 3.74575 13.223 3.96875 13.5 3.96875 C 13.777 3.96875 14 3.74575 14 3.46875 L 14 2.5 C 14 2.223 13.777 2 13.5 2 z M 3 5 L 3 13 C 3 15.769915 5.2300853 18 8 18 L 4 18 L 4 19 L 17 19 L 17 18 L 13 18 C 15.769915 18 18 15.769915 18 13 L 18.5 13 A 2.5000001 2.5000001 0 0 0 21 10.5 A 2.5000001 2.5000001 0 0 0 18.5 8 L 18 8 L 18 5 L 3 5 z M 4 6 L 17 6 L 17 8.5 L 17 12.5 L 17 12.666016 C 17 15.066609 15.066609 17 12.666016 17 L 8.3339844 17 C 5.9333915 17 4.0039063 15.066609 4.0039062 12.666016 C 4.0039062 11.442708 4 8.9972276 4 6 z M 5 7 L 5 13 C 5 14.661949 6.5433043 16 8.4609375 16 L 12.539062 16 C 14.456696 16 16 14.661949 16 13 L 16 7 L 5 7 z M 18 9 L 18.5 9 A 1.5 1.5 0 0 1 20 10.5 A 1.5 1.5 0 0 1 18.5 12 L 18 12 L 18 9 z "
        transform="matrix(0.26458334,0,0,0.26458334,0.26458307,-0.26458339)"
        id="path4168" />
+    <g
+       style="display:inline"
+       id="g4167">
+      <rect
+         y="3.1750002"
+         x="4.7624998"
+         height="1.8520832"
+         width="0.79374999"
+         id="rect4147"
+         style="opacity:1;fill:#da4453;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 2;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         style="opacity:1;fill:#da4453;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 2;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4165"
+         width="0.79374999"
+         height="1.8520832"
+         x="3.4395833"
+         y="3.1750002" />
+    </g>
   </g>
 </svg>

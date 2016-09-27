@@ -2,7 +2,7 @@ from subprocess import Popen, PIPE
 
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
 from ui.forms import break_screen_form
 
 class BreakWindow(QWidget):
@@ -15,17 +15,19 @@ class BreakWindow(QWidget):
         #self.setParent(None)
         self.setAttribute(Qt.WA_NoSystemBackground)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.showFullScreen()
 
         self.gui_connection = gui_connection
-        #self.gui_connection.changeState.connect(self.changeState)
         self.gui_connection.whatTime.connect(self.setTime)
-        self.gui_connection.startBreak.emit()
+        self.gui_connection.changeState.connect(self.changeState)
 
         self.ui.lockScreen_pushButton.clicked.connect(self.lockScreen)
         self.ui.breakComp_pushButton.clicked.connect(self.close)
         self.ui.skipBreak_pushButton.clicked.connect(self.skipBreak)
         self.ui.postponeBreak_pushButton.clicked.connect(self.postponeBreak)
+
+    def changeState(self, state):
+        pixmap = QIcon().fromTheme('koffeebreak-' + state).pixmap(self.ui.icon_label.height())
+        self.ui.icon_label.setPixmap(pixmap)
 
     def setTime(self, time):
         self.ui.leftTime_label.setText('%02d:%02d' % (divmod(time, 60)))

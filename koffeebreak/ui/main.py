@@ -14,6 +14,8 @@ class Window(QDialog):
 
         #init settings dialog
         self.settings_dialog = settings.SettingsDialog()
+        self.break_screen = break_screen.BreakWindow(self.gui_connection)
+        self.is_pause = False
 
         self.createActions()
         self.createTrayIcon()
@@ -28,9 +30,9 @@ class Window(QDialog):
         self.takeBreakAction = QAction(QIcon().fromTheme("koffeebreak-break-full"),
                                   "Take a break", self,
                                   triggered=self.start_break)
-        self.pauseAction = QAction(QIcon().fromTheme('media-playback-pause'),
+        self.pauseOrResumeAction = QAction(QIcon().fromTheme('media-playback-pause'),
                                   "Pause program",self,
-                                  triggered=self.pauseProgram)
+                                  triggered=self.pauseOrResumeProgram)
         self.settingsAction = QAction(QIcon().fromTheme('configure'),
                                   "Settings", self,
                                   triggered=self.settings_dialog.show)
@@ -43,33 +45,40 @@ class Window(QDialog):
         self.trayIconMenu.addAction(self.settingsAction)
         self.trayIconMenu.addSeparator()
         self.trayIconMenu.addAction(self.takeBreakAction)
-        self.trayIconMenu.addAction(self.pauseAction)
+        self.trayIconMenu.addAction(self.pauseOrResumeAction)
         self.trayIconMenu.addSeparator()
         self.trayIconMenu.addAction(self.quitAction)
 
         self.trayIcon = QSystemTrayIcon(self)
         self.trayIcon.setContextMenu(self.trayIconMenu)
+        self.trayIcon.setToolTip('KoffeeBreak')
+        self.trayIcon.activated.connect(self.showTime)
+
+    def showTime(self, reason):
+        if reason == QSystemTrayIcon.Trigger:
+            print(QSystemTrayIcon.Trigger)
+            self.trayIcon.showMessage('KoffeeBreak','Left: %02d:%02d' % (divmod(self.time, 60)), QSystemTrayIcon.NoIcon)
 
     def setTrayIcon(self, iconName):
         icon = QIcon().fromTheme('koffeebreak-' + iconName)
         self.trayIcon.setIcon(icon)
 
     def start_break(self):
-        self.break_screen = break_screen.BreakWindow(self.gui_connection)
+        self.gui_connection.startBreak.emit()
+        self.break_screen.showFullScreen()
 
     def changeState(self, state):
+        self.current_state = state
         self.setTrayIcon(state)
         if state == "break-1-4":
             pass
-            #self.gui_connection.whatTime.emit()
-            #self.trayIcon.showMessage("Break-1-4", str(self.time))
         elif state == "break-2-4":
             pass
         elif state == "break-3-4":
             pass
         elif state == "break-full":
             if (not self.break_screen.isVisible()):
-                self.start_break()
+                self.break_screen.showFullScreen()
         elif state == "work-1-8":
             pass
         elif state == "work-2-8":
@@ -85,14 +94,30 @@ class Window(QDialog):
         elif state == "work-7-8":
             pass
         elif state == "work-full":
-            if (self.break_screen.isVisible()):
+            try:
                 self.break_screen.close()
+            except:
+                pass
 
     def setTime(self, time):
         self.time = time
+        if self.time == 60 and self.current_state.startswith('work'):
+            if self.trayIcon.isVisible():
+                self.trayIcon.showMessage('KoffeeBreak', 'One minute left to break')
+        elif self.time == 60 and self.current_state.startswith('break') and not self.break_screen.isVisible():
+            if self.trayIcon.isVisible():
+                self.trayIcon.showMessage('KoffeeBreak', 'One minute left to work')
 
-    def pauseProgram(self):
-        self.gui_connection.pauseTimer.emit()
+    def pauseOrResumeProgram(self):
+        self.gui_connection.pauseOrResumeTimer.emit()
+        if self.is_pause:
+            self.pauseOrResumeAction.setIcon(QIcon().fromTheme('media-playback-pause'))
+            self.pauseOrResumeAction.setText('Pause program')
+            self.is_pause = False
+        else:
+            self.pauseOrResumeAction.setIcon(QIcon().fromTheme('media-playback-start'))
+            self.pauseOrResumeAction.setText('Resume program')
+            self.is_pause = True
 
     def close_app(self):
         self.gui_connection.closeApp.emit()
