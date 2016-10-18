@@ -21,13 +21,24 @@ class BreakWindow(QWidget):
         self.gui_connection.changeState.connect(self.changeState)
 
         self.ui.lockScreen_pushButton.clicked.connect(self.lockScreen)
-        self.ui.breakComp_pushButton.clicked.connect(self.close)
+        self.ui.breakComp_pushButton.clicked.connect(self.breakComp)
         self.ui.skipBreak_pushButton.clicked.connect(self.skipBreak)
         self.ui.postponeBreak_pushButton.clicked.connect(self.postponeBreak)
 
     def changeState(self, state):
         pixmap = QIcon().fromTheme('koffeebreak-' + state).pixmap(self.ui.icon_label.height())
         self.ui.icon_label.setPixmap(pixmap)
+
+    def lockScreen(self):
+        self.gui_connection.lockScreen.emit()
+        # Popen with stdout for logs in future
+        with Popen(['qdbus', 'org.freedesktop.ScreenSaver', '/ScreenSaver',
+                    'Lock'], stdout=PIPE, universal_newlines=True) as proc:
+            self.close()
+
+    def breakComp(self):
+        self.gui_connection.breakComp.emit()
+        self.close()
 
     def setTime(self, time):
         self.ui.leftTime_label.setText('%02d:%02d' % (divmod(time, 60)))
@@ -39,12 +50,6 @@ class BreakWindow(QWidget):
     def postponeBreak(self):
         self.gui_connection.postponeBreak.emit()
         self.close()
-
-    def lockScreen(self):
-        # Popen with stdout for logs in future
-        with Popen(['qdbus', 'org.freedesktop.ScreenSaver', '/ScreenSaver',
-                    'Lock'], stdout=PIPE, universal_newlines=True) as proc:
-            self.close()
 
 if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication

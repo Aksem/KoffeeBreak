@@ -1,6 +1,6 @@
 import asyncio
 import settings
-import history
+from history_manager import HistoryManager
 
 class Timer():
     def __init__(self, config, gui_connection=None):
@@ -12,8 +12,8 @@ class Timer():
             self.init_gui_qt()
         self.init_parameters()
 
-        self.history_file = history.History()
-        self.history_file.write('Open program')
+        self.history_file = HistoryManager()
+        self.history_file.write_message('open program')
 
         self.start_work()
 
@@ -35,14 +35,24 @@ class Timer():
         self.gui_connection.postponeBreak.connect(self.postponeBreak)
         self.gui_connection.startBreak.connect(self.start_break)
         self.gui_connection.closeApp.connect(self.end)
+        self.gui_connection.lockScreen.connect(self.lockScreen)
+        self.gui_connection.breakComp.connect(self.breakComp)
 
     def init_parameters(self):
         self.current_state = self.DEFAULT_STATE
         self.gui_state = self.current_state
         self.count_short_breaks = 0
 
+    def lockScreen(self):
+        self.history_file.write_message('lock screen')
+
+    def breakComp(self):
+        self.history_file.write_message('break at the computer')
+        if self.GUI == "qt":
+            self.gui_connection.updateHistory.emit()
+
     def postponeBreak(self):
-        self.history_file.write('Postpone break')
+        self.history_file.write_message('postpone break')
         if (not self.count_short_breaks == 0):
             self.count_short_breaks -=1
         else:
@@ -52,7 +62,7 @@ class Timer():
         self.is_work_time = True
 
     def skipBreak(self):
-        self.history_file.write('Skip break')
+        self.history_file.write_message('skip break')
         if (not self.count_short_breaks == 0):
             self.count_short_breaks -=1
         else:
@@ -60,7 +70,9 @@ class Timer():
         self.start_work()
 
     def start_work(self):
-        self.history_file.write('Start work')
+        self.history_file.write_message('start work')
+        if self.GUI == "qt":
+            self.gui_connection.updateHistory.emit()
         self.is_work_time = True
         self.left_time = self.WORK_TIME
         self.all_time = self.WORK_TIME
@@ -69,29 +81,34 @@ class Timer():
         self.isActive = True
 
     def end(self):
+        self.history_file.write_message('close program')
         self.isActive = False
 
     def pause_or_resume(self):
         if self.isPause == False:
-            self.history_file.write('Pause program')
+            self.history_file.write_message('pause program')
             self.isPause = True
         else:
-            self.history_file.write('Resume program')
+            self.history_file.write_message('resume program')
             self.isPause = False
 
     def start_break(self):
         # start break
         if self.count_short_breaks < self.NUMBER_OF_SHORT_BREAKS:
-            self.history_file.write('Start short break')
+            if self.GUI == "qt":
+                self.gui_connection.updateHistory.emit()
+            self.history_file.write_message('start short break')
             self.left_time = self.TIME_OF_SHORT_BREAK
             self.all_time = self.TIME_OF_SHORT_BREAK
             self.count_short_breaks += 1
         else:
-            self.history_file.write('Start long break')
+            self.history_file.write_message('start long break')
             self.left_time = self.TIME_OF_LONG_BREAK
             self.all_time = self.TIME_OF_LONG_BREAK
             self.count_short_breaks = 0
         self.is_work_time = False
+        if self.GUI == "qt":
+            self.gui_connection.updateHistory.emit()
 
     async def makeStep(self):
         if self.GUI == "qt":
@@ -149,4 +166,4 @@ async def timer(loop, config, gui_connection=None):
     timer.start()
     while timer.isActive:
         await timer.makeStep()
-        print(timer.left_time)
+        #print(timer.left_time)

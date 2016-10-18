@@ -8,3 +8,6 @@ class qSignal(QObject):
     pauseOrResumeTimer = pyqtSignal()
     postponeBreak = pyqtSignal()
     startBreak = pyqtSignal()
+    lockScreen = pyqtSignal()
+    breakComp = pyqtSignal()
+    updateHistory = pyqtSignal()
