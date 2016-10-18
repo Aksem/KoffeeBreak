@@ -11,7 +11,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="koffeebreak-work-7-8.svg">
+   sodipodi:docname="koffeebreak-work-6-8-pause.svg">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -40,8 +40,8 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="22.627417"
-     inkscape:cx="13.333555"
-     inkscape:cy="4.4213625"
+     inkscape:cx="12.405477"
+     inkscape:cy="8.7523915"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -72,8 +72,27 @@
        d="M 11 3 C 6.568 3 3 6.568 3 11 C 3 15.432 6.568 19 11 19 C 15.432 19 19 15.432 19 11 C 19 6.568 15.432 3 11 3 z M 11 4 C 14.878 4 18 7.122 18 11 C 18 14.878 14.878 18 11 18 C 7.122 18 4 14.878 4 11 C 4 7.122 7.122 4 11 4 z "
        id="path6" />
     <path
-       style="color:#4d4d4d;fill:#3daee9;fill-opacity:1;stroke:none"
-       d="M 11 5 C 7.676 5 5 7.676 5 11 C 5 14.324 7.676 17 11 17 C 14.324 17 17 14.324 17 11 C 17 9.338 16.330594 7.8384062 15.246094 6.7539062 L 11 11 L 11 5 z "
+       style="color:#4d4d4d;fill:#5fbdea;fill-opacity:1;stroke:none"
+       d="M 11 5 C 7.676 5 5 7.676 5 11 C 5 14.324 7.676 17 11 17 C 14.324 17 17 14.324 17 11 L 11 11 L 11 5 z "
        id="path4198" />
+    <g
+       transform="matrix(3.7795274,0,0,3.7795274,-0.99999767,1.0000006)"
+       style="display:inline"
+       id="g4167">
+      <rect
+         y="3.1750002"
+         x="4.7624998"
+         height="1.8520832"
+         width="0.79374999"
+         id="rect4147"
+         style="opacity:1;fill:#da4453;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 2;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         style="opacity:1;fill:#da4453;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 2;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4165"
+         width="0.79374999"
+         height="1.8520832"
+         x="3.4395833"
+         y="3.1750002" />
+    </g>
   </g>
 </svg>

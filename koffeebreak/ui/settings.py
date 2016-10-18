@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QTimer
 from ui.forms import settings_form
 import settings as settings_file
 
@@ -52,6 +53,11 @@ class SettingsDialog(QDialog):
         settings_file.write(self.settings)
         self.ui.statusLabel.setText('To apply changes, please, restart application.')
         self.is_saved = True
+        timer = QTimer()
+        timer.singleShot(2000, self.clearStatus)
+
+    def clearStatus(self):
+        self.ui.statusLabel.clear()
 
     def return_to_default(self):
         settings_file.set_default(self.settings)
@@ -60,7 +66,6 @@ class SettingsDialog(QDialog):
 
     def value_changed(self):
         self.is_saved = False
-        self.ui.statusLabel.clear()
 
     def closeEvent(self, event):
         if self.is_saved:
@@ -85,5 +90,3 @@ class SettingsDialog(QDialog):
                 event.accept()
             elif answer == QMessageBox.Cancel:
                 event.ignore()
-
-        self.ui.statusLabel.clear()
