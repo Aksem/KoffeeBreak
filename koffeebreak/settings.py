@@ -1,9 +1,10 @@
 from configparser import ConfigParser
+from os import path
 
 def read():
     #add checking for existing file and if it is true.
     settings = ConfigParser()
-    settings.read('settings.ini')
+    settings.read(path.join(path.dirname(__file__), 'settings.ini'))
     for time_item in settings['TIME']:
         settings['TIME'][time_item] = str(int(settings['TIME'][time_item]) * 60)
     return settings
@@ -35,5 +36,5 @@ def update(new_settings):
     write(settings)
 
 def write(settings):
-    with open('settings.ini', 'w') as configfile:
+    with open(path.join(path.dirname(__file__), 'settings.ini'), 'w') as configfile:
         settings.write(configfile)
