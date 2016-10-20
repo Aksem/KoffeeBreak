@@ -116,7 +116,7 @@ class StatisticManager():
         for message in re.findall('(\d{2}:\d{2}:\d{2} - .+)', self.history):
             self.add_state(message)
 
-    def return_statistic(self):
+    def get_statistic(self):
         return [self.all_time, self.work_time, self.short_break_time,
                 self.long_break_time], [self.number_of_short_breaks, self.number_of_short_breaks_at_the_comp,
                 self.number_of_postponed_short_breaks, self.number_of_skipped_short_breaks], [self.number_of_long_breaks, self.number_of_long_breaks_at_the_comp,

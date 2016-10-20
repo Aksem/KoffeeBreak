@@ -87,7 +87,7 @@ class Window(QMainWindow):
         self.trayIcon.setIcon(icon)
 
     def update_labels(self):
-        self.statistic_time, short_break, long_break = self.statistic_file.return_statistic()
+        self.statistic_time, short_break, long_break = self.statistic_file.get_statistic()
         self.ui.allTime_lbl.setText(str(self.statistic_time[0]))
         self.ui.workTime_lbl.setText(str(self.statistic_time[1]))
         self.ui.shortBreakTime_lbl.setText(str(self.statistic_time[2]))
@@ -120,7 +120,8 @@ class Window(QMainWindow):
         delta = datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S') - timer
         self.updateTime(delta)
         self.show()
-        self.timeTimer.start()
+        if not self.is_pause:
+            self.timeTimer.start()
 
     def updateTime(self, delta = timedelta(seconds = 1)):
         self.state = self.statistic_file.current_state()
@@ -163,15 +164,10 @@ class Window(QMainWindow):
     def skip_break(self):
         self.gui_connection.skipBreak.emit()
 
-    def setVisibleBreakAction(self):
-        self.postponeBreakAction.setVisible(True)
-        self.skipBreakAction.setVisible(True)
-        self.showBreakScreenAction.setVisible(True)
-
-    def setUnvisibleBreakAction(self):
-        self.postponeBreakAction.setVisible(False)
-        self.skipBreakAction.setVisible(False)
-        self.showBreakScreenAction.setVisible(False)
+    def setBreakAction(self, visible):
+        self.postponeBreakAction.setVisible(visible)
+        self.skipBreakAction.setVisible(visible)
+        self.showBreakScreenAction.setVisible(visible)
 
     def changeState(self, state):
         self.current_state = state
@@ -184,7 +180,7 @@ class Window(QMainWindow):
             pass
         elif state == "break-full":
             self.takeBreakAction.setVisible(False)
-            self.setVisibleBreakAction()
+            self.setBreakAction(True)
             if (not self.break_screen.isVisible()):
                 self.break_screen.showFullScreen()
         elif state == "work-1-8":
@@ -203,7 +199,7 @@ class Window(QMainWindow):
             pass
         elif state == "work-full":
             self.takeBreakAction.setVisible(True)
-            self.setUnvisibleBreakAction()
+            self.setBreakAction(False)
             try:
                 self.break_screen.close()
             except:
@@ -226,14 +222,17 @@ class Window(QMainWindow):
             self.pauseOrResumeAction.setText('Pause program')
             self.is_pause = False
             self.takeBreakAction.setVisible(True)
-            self.setVisibleBreakAction()
+            self.setBreakAction(True)
+            if self.isVisible() and not self.timeTimer.isActive():
+                self.timeTimer.start()
         else:
             self.pauseOrResumeAction.setIcon(QIcon().fromTheme('media-playback-start'))
             self.pauseOrResumeAction.setText('Resume program')
             self.is_pause = True
             self.takeBreakAction.setVisible(False)
-            self.setUnvisibleBreakAction()
-
+            self.setBreakAction(False)
+            if self.isVisible() and self.timeTimer.isActive():
+                self.timeTimer.stop()
 
     def close_app(self):
         self.gui_connection.closeApp.emit()
