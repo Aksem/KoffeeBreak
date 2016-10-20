@@ -11,7 +11,6 @@ class StatisticManager():
 
         self.start_timer = datetime.strptime('1900-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
         self.previous_state = None
-        self.is_pause = False
 
     def reset(self):
         self.all_time = timedelta()
@@ -48,7 +47,6 @@ class StatisticManager():
         self.str_time, self.ms = message.split(' - ')
         self.time = datetime.strptime(self.date + ' ' + self.str_time, '%Y-%m-%d %H:%M:%S')
         if self.ms == 'open program':
-            self.is_pause = False
             self.previous_state = 'open program'
         elif self.ms == 'start work':
             if self.previous_state == 'start short break':
@@ -89,7 +87,6 @@ class StatisticManager():
             elif self.previous_state == 'start long break':
                 self.number_of_long_breaks_at_the_comp += 1
         elif self.ms == 'pause program':
-            self.is_pause = True
             if self.previous_state == 'start work':
                 self.was_work_time()
             elif self.previous_state == 'start short break':
@@ -98,7 +95,6 @@ class StatisticManager():
                 self.was_long_break()
         elif self.ms == 'resume program':
             self.start_timer = self.time
-            self.is_pause = False
         elif self.ms == 'close program':
             if self.previous_state == 'start work':
                 self.was_work_time()
@@ -111,9 +107,6 @@ class StatisticManager():
         self.date = day[0:10]
         for message in re.findall("(\d{2}:\d{2}:\d{2} - .+)", day):
             self.add_state(message)
-
-    def is_pause(self):
-        return self.is_pause
 
     def reload(self):
         with open(self.HISTORY_FILE) as f:
