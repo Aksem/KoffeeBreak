@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+
+import sys, os
+
+sys.path.insert(1, '/usr/share/koffeebreak/koffeebreak')
+
+try:
+	os.getcwd()
+except:
+	os.chdir(os.path.expanduser('~'))
+
+import main
+main.main()

@@ -32,7 +32,7 @@ def start_qt_app(config):
         except asyncio.CancelledError:
             pass
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Koffeebreak")
 
     parser.add_argument('--gui', help='set type of gui(none, qt(default))')
@@ -46,3 +46,6 @@ if __name__ == "__main__":
 
     if settings.read_parameter(config, ['EXECUTION', 'gui']) == 'qt':
         start_qt_app(config)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,8 @@
+include *.desktop
+
+recursive-include src *.svg
+recursive-include src/scripts
+
+global-exclude __pycache__ *.pyc *.pyo
+
+

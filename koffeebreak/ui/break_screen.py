@@ -15,6 +15,7 @@ class BreakWindow(QWidget):
         #self.setParent(None)
         self.setAttribute(Qt.WA_NoSystemBackground)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
 
         self.gui_connection = gui_connection
         self.gui_connection.whatTime.connect(self.setTime)
