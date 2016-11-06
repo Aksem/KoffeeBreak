@@ -1,13 +1,13 @@
 """
 Usage:
 --------------------------------------------------------------------------
- to build package:       python setup-sk1.py build
- to install package:     python setup-sk1.py install
- to remove installation: python setup-sk1.py uninstall
+ to build package:       python3 setup.py build
+ to install package:     python3 setup.py install
+ to remove installation: python3 setup.py uninstall
 --------------------------------------------------------------------------
- to create source distribution:   python setup-sk1.py sdist
+ to create source distribution:   python3 setup.py sdist
 --------------------------------------------------------------------------
- to create binary RPM distribution:  python setup-sk1.py bdist_rpm
+ to create binary RPM distribution:  python3 setup.py bdist_rpm
 --------------------------------------------------------------------------.
  Help on available distribution formats: --help-formats
 """
@@ -112,7 +112,7 @@ from distutils.core import setup
 
 setup (name = 'koffeebreak',
         version = '0.1',
-        author = 'Yuri Fabirovsky, Vlad Ghnatiuk',
+        author = 'Yuri Fabirovsky, Vladyslav Hnatiuk',
         author_email = 'fabirovskij@open365.com, vladyslav5@meta.ua',
         url = 'https://github.com/Aksem/KoffeeBreak',
         download_url = 'https://github.com/Aksem/KoffeeBreak',
