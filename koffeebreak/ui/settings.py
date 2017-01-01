@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox, QStyle
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt
 from ui.forms import settings_form
 import settings as settings_file
 
@@ -11,13 +11,12 @@ class SettingsDialog(QDialog):
         self.ui.setupUi(self)
         self.load_settings()
 
-        self.setWindowTitle("KoffeeBreak - Settings")
-        self.setWindowIcon(QIcon().fromTheme("koffeebreak"))
-
         #conections
         self.ui.closePushButton.clicked.connect(self.close)
         self.ui.savePushButton.clicked.connect(self.save_settings)
         self.ui.defaultPushButton.clicked.connect(self.return_to_default)
+
+        #self.setAttribute(Qt.WA_DeleteOnClose)
 
         self.is_saved = True
 
@@ -26,7 +25,6 @@ class SettingsDialog(QDialog):
         self.ui.timeOfLongBreakSpinBox.valueChanged.connect(self.value_changed)
         self.ui.workTimeWhenPostponeBreakSpinBox.valueChanged.connect(self.value_changed)
         self.ui.numberOfShortsBreaksSpinBox.valueChanged.connect(self.value_changed)
-
 
     def load_settings(self):
         self.settings = settings_file.read()
@@ -51,7 +49,7 @@ class SettingsDialog(QDialog):
         self.settings['BREAKS']['number_of_short_breaks'] = str(
                         self.ui.numberOfShortsBreaksSpinBox.value())
         settings_file.write(self.settings)
-        self.ui.statusLabel.setText('To apply changes, please, restart application.')
+        self.ui.statusLabel.setText('To apply changes, please, restart application')
         self.is_saved = True
         timer = QTimer()
         timer.singleShot(2000, self.clearStatus)
@@ -60,7 +58,7 @@ class SettingsDialog(QDialog):
         self.ui.statusLabel.clear()
 
     def return_to_default(self):
-        settings_file.set_default(self.settings)
+        settings_file.set_default()
         self.load_settings()
         self.ui.statusLabel.clear()
 

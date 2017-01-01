@@ -5,13 +5,9 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 22 22"
-   id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="koffeebreak-mono.svg">
+   id="svg2"
+   viewBox="0 0 22 22">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -24,53 +20,21 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="713"
-     id="namedview8"
-     showgrid="true"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:zoom="22.627417"
-     inkscape:cx="7.3922633"
-     inkscape:cy="8.8182555"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
-     inkscape:object-nodes="true"
-     inkscape:snap-intersection-paths="true"
-     inkscape:snap-bbox="true">
-    <inkscape:grid
-       type="xygrid"
-       id="grid4138" />
-  </sodipodi:namedview>
   <defs
      id="defs3051">
     <style
-       type="text/css"
-       id="current-color-scheme">
+       id="current-color-scheme"
+       type="text/css">
       .ColorScheme-Text {
         color:#4d4d4d;
       }
       </style>
   </defs>
   <g
-     inkscape:groupmode="layer"
-     id="layer1"
-     inkscape:label="time">
+     id="layer1">
     <path
-       style="display:inline;opacity:1;fill:#31363b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 13.221726,2.6964278 C 10.748998,2.6483736 7.9982977,3.9731131 5.9429571,6.2055122 3.389172,8.9849862 2.33276,13.415441 3.4320194,15.301107 c 0.5355238,0.918632 0.9921036,1.258467 1.325126,1.265302 0.3330224,0.0069 0.5428325,-0.319033 0.5859399,-0.73263 0.2926125,-2.807572 2.233968,-4.546498 5.0325297,-5.247237 2.786466,-0.6977111 4.841334,-2.9428639 5.174303,-4.9284528 0.02954,-0.1761322 0.05339,-0.3664074 0.05326,-0.5269366 -8.39e-4,-1.3150615 -1.046333,-2.3851352 -2.340484,-2.4281684 -0.01401,-7.132e-4 -0.02687,-0.00626 -0.04098,-0.00656 z m 4.021273,2.7371191 c -0.333027,-0.00683 -0.542834,0.3190321 -0.585942,0.7326295 -0.292613,2.8075712 -2.233969,4.5464986 -5.03253,5.2472376 -2.7864666,0.697711 -4.841335,2.942044 -5.1743016,4.927633 -0.029534,0.176132 -0.053393,0.367227 -0.053268,0.527756 0.00104,1.315062 1.0455129,2.385133 2.3396628,2.428169 0.01401,7.13e-4 0.026861,0.0063 0.040976,0.0066 2.4727288,0.04806 5.2234268,-1.276686 7.2787688,-3.509083 2.553788,-2.779471 3.611018,-7.2099254 2.511758,-9.0955904 C 18.032598,5.7802187 17.576021,5.4403825 17.242999,5.4335488 Z"
        id="path4410"
-       inkscape:connector-curvature="0" />
+       d="M 13.221726,2.6964278 C 10.748998,2.6483736 7.9982977,3.9731131 5.9429571,6.2055122 3.389172,8.9849862 2.33276,13.415441 3.4320194,15.301107 c 0.5355238,0.918632 0.9921036,1.258467 1.325126,1.265302 0.3330224,0.0069 0.5428325,-0.319033 0.5859399,-0.73263 0.2926125,-2.807572 2.233968,-4.546498 5.0325297,-5.247237 2.786466,-0.6977111 4.841334,-2.9428639 5.174303,-4.9284528 0.02954,-0.1761322 0.05339,-0.3664074 0.05326,-0.5269366 -8.39e-4,-1.3150615 -1.046333,-2.3851352 -2.340484,-2.4281684 -0.01401,-7.132e-4 -0.02687,-0.00626 -0.04098,-0.00656 z m 4.021273,2.7371191 c -0.333027,-0.00683 -0.542834,0.3190321 -0.585942,0.7326295 -0.292613,2.8075712 -2.233969,4.5464986 -5.03253,5.2472376 -2.7864666,0.697711 -4.841335,2.942044 -5.1743016,4.927633 -0.029534,0.176132 -0.053393,0.367227 -0.053268,0.527756 0.00104,1.315062 1.0455129,2.385133 2.3396628,2.428169 0.01401,7.13e-4 0.026861,0.0063 0.040976,0.0066 2.4727288,0.04806 5.2234268,-1.276686 7.2787688,-3.509083 2.553788,-2.779471 3.611018,-7.2099254 2.511758,-9.0955904 C 18.032598,5.7802187 17.576021,5.4403825 17.242999,5.4335488 Z"
+       style="display:inline;opacity:1;fill:#31363b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
 </svg>
