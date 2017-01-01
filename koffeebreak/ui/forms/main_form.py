@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'src/ui/forms/main.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,13 +11,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
-        mainWindow.resize(677, 388)
+        mainWindow.resize(677, 426)
         icon = QtGui.QIcon.fromTheme("koffeebreak")
         mainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.numberOfDays_spinBox = QtWidgets.QSpinBox(self.centralwidget)
+        self.numberOfDays_spinBox.setEnabled(True)
+        self.numberOfDays_spinBox.setMinimum(1)
+        self.numberOfDays_spinBox.setMaximum(30)
+        self.numberOfDays_spinBox.setProperty("value", 7)
+        self.numberOfDays_spinBox.setObjectName("numberOfDays_spinBox")
+        self.verticalLayout_4.addWidget(self.numberOfDays_spinBox)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setAutoFillBackground(True)
         self.groupBox.setObjectName("groupBox")
@@ -262,6 +269,9 @@ class Ui_mainWindow(object):
         self.horizontalLayout_14.addWidget(self.reset_pushButton)
         spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem12)
+        self.update_pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.update_pushButton.setObjectName("update_pushButton")
+        self.horizontalLayout_14.addWidget(self.update_pushButton)
         self.close_pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.close_pushButton.setDefault(True)
         self.close_pushButton.setObjectName("close_pushButton")
@@ -279,6 +289,8 @@ class Ui_mainWindow(object):
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "KoffeeBreak"))
+        self.numberOfDays_spinBox.setSuffix(_translate("mainWindow", " days"))
+        self.numberOfDays_spinBox.setPrefix(_translate("mainWindow", "Display statistic for "))
         self.groupBox.setTitle(_translate("mainWindow", "Time"))
         self.label.setText(_translate("mainWindow", "All time"))
         self.allTime_lbl.setText(_translate("mainWindow", "0"))
@@ -307,5 +319,6 @@ class Ui_mainWindow(object):
         self.label_23.setText(_translate("mainWindow", "Number of skipped long breaks"))
         self.numberOfSkippededLongBreaks_lbl.setText(_translate("mainWindow", "0"))
         self.reset_pushButton.setText(_translate("mainWindow", "Reset"))
+        self.update_pushButton.setText(_translate("mainWindow", "Update"))
         self.close_pushButton.setText(_translate("mainWindow", "Close"))
 

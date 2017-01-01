@@ -1,5 +1,10 @@
+#!/usr/bin/env python3
+
+"""Main starting point for KoffeeBreak.  Contains the main() entry point."""
+
 import asyncio
 import argparse
+import sys
 
 from timer import timer
 import settings
@@ -28,14 +33,22 @@ def start_qt_app(config):
     with loop:
         #asyncio.run_coroutine_threadsafe(timer(loop, config, gui_connection), loop)
         try:
-            loop.run_until_complete(timer(loop, config, gui_connection))
+            loop.run_until_complete(timer(config, gui_connection))
         except asyncio.CancelledError:
             pass
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Koffeebreak")
+def version_callback():
+    # TODO: find a way to get version from egg-info(pkg-resources don`t work :c )
+    raise SystemExit
 
-    parser.add_argument('--gui', help='set type of gui(none, qt(default))')
+def main():
+    parser = argparse.ArgumentParser(description="KoffeeBreak",
+                                     epilog='Please make choice')
+
+    parser.add_argument('-g', '--gui', default='qt', choices=['qt', 'none'],
+                        help='set type of gui')
+    # parser.add_argument('-v', '--version',
+    #                     help="show program's version number and exit")
     args = parser.parse_args()
 
     config = settings.read()
@@ -46,3 +59,6 @@ if __name__ == "__main__":
 
     if settings.read_parameter(config, ['EXECUTION', 'gui']) == 'qt':
         start_qt_app(config)
+
+if __name__ == "__main__":
+    main()

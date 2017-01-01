@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>313</height>
+    <height>272</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>KoffeeBreak - Settings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="koffeebreak"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

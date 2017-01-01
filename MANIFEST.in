@@ -1,0 +1,7 @@
+include *.desktop
+include src/scripts/koffeebreak
+include README.md
+
+recursive-include src *.svg
+
+global-exclude __pycache__ *.pyc *.pyo
